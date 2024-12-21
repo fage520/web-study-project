@@ -3,7 +3,7 @@ when:
     branch: main
 steps:
   - name: build
-    image: node:22
+    image: gplane/pnpm:9.15.1-node22-alpine
     commands:
       - echo "开始构建"
       - pnpm install
