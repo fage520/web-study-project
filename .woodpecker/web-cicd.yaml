@@ -1,0 +1,23 @@
+when:
+  - event: push
+    branch: main
+steps:
+  - name: build
+    image: node:22
+    commands:
+      - echo "开始构建"
+      - pnpm install
+      - pnpm run build
+      - echo "构建完成"
+
+  - name: docker-build
+    image: woodpeckerci/plugin-docker-buildx
+    settings:
+      dockerfile: Dockerfile
+      platforms: linux/amd64
+      repo: fage520docker/web-study-project
+      tags: ${CI_STEP_STARTED}
+      username: 
+        from_secret: docker_name
+      password:
+        from_secret: docker_token
