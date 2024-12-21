@@ -16,7 +16,7 @@ steps:
       dockerfile: Dockerfile
       platforms: linux/amd64
       repo: fage520docker/web-study-project
-      tags: ${CI_COMMIT_MESSAGE}-${CI_PIPELINE_CREATED}
+      tags: ${CI_PIPELINE_CREATED}
       username: 
         from_secret: docker_name
       password:
