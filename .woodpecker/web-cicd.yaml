@@ -24,15 +24,15 @@ steps:
   # 部署到k8s
   - name: deploy
     image: euryecetelecom/woodpeckerci-kubernetes
-        settings:
-            kubernetes_server:
-                from_secret: kubernetes_server
-            kubernetes_token:
-                from_secret: kubernetes_token
-            kubernetes_cert:
-                from_secret: kubernetes_cert
-            namespace: home-web
-            deployment: web-study-project
-            repo: fage520docker/web-study-project
-            container: web-study-project
-            tag: ${CI_PIPELINE_CREATED}
+      settings:
+        kubernetes_server:
+          from_secret: kubernetes_server
+        kubernetes_token:
+          from_secret: kubernetes_token
+        kubernetes_cert:
+          from_secret: kubernetes_cert
+        namespace: home-web
+        deployment: web-study-project
+        repo: fage520docker/web-study-project
+        container: web-study-project
+        tag: ${CI_PIPELINE_CREATED}
