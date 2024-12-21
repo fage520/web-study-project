@@ -9,7 +9,7 @@ steps:
       - pnpm install
       - pnpm run build
       - echo "构建完成"
-
+  # 构建docker镜像
   - name: docker-build
     image: woodpeckerci/plugin-docker-buildx
     settings:
