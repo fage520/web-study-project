@@ -2,13 +2,13 @@ when:
   - event: push
     branch: main
 steps:
-  - name: build
+  - name: package
     image: gplane/pnpm:9.15.1-node22-alpine
     commands:
-      - echo "开始构建"
+      - echo "开始打包"
       - pnpm install
       - pnpm run build
-      - echo "构建完成"
+      - echo "打包完成"
   # 构建docker镜像
   - name: docker-build
     image: woodpeckerci/plugin-docker-buildx
