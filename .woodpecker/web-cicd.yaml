@@ -2,14 +2,6 @@ when:
   - event: push
     branch: main
 steps:
-  - name: package
-    image: gplane/pnpm:9.15.1-node22-alpine
-    commands:
-      - echo "开始打包"
-      - pnpm install
-      - pnpm run build
-      - echo "打包完成"
-  # 构建docker镜像
   - name: docker-build
     image: woodpeckerci/plugin-docker-buildx
     settings:
@@ -17,7 +9,7 @@ steps:
       platforms: linux/amd64
       repo: fage520docker/web-study-project
       tags: ${CI_PIPELINE_CREATED}
-      username: 
+      username:
         from_secret: docker_name
       password:
         from_secret: docker_token
