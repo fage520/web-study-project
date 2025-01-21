@@ -1,4 +1,4 @@
-FROM node:20-alpine as build-stage
+FROM node:20-alpine AS build-stage
 
 WORKDIR /app
 RUN corepack enable
@@ -12,7 +12,7 @@ RUN pnpm install --frozen-lockfile
 COPY . .
 RUN pnpm build
 
-FROM nginx:stable-alpine as production-stage
+FROM nginx AS production-stage
 
 COPY --from=build-stage /app/dist /usr/share/nginx/html
 EXPOSE 80
