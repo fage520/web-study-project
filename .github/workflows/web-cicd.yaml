@@ -35,15 +35,14 @@ jobs:
       with:
         version: 'v1.28.2'
 
-#    - name: 配置kubeconfig
-#      run: |
-#        echo "$KUBE_CONFIG_DATA" | base64 --decode > kubeconfig
-#        chmod 600 kubeconfig
-#        export KUBECONFIG=$(pwd)/kubeconfig
-#      env:
-#        KUBE_CONFIG_DATA: ${{ secrets.KUBE_CONFIG_DATA }}
-#
-#    - name: 部署到k8s
-#      run: |
-#        kubectl apply -f k8s/deployment.yaml
-#        kubectl set image deployment/<your-deployment-name> <your-container-name>=<your-namespace>/<your-repo>:latest
+    - name: 配置kubeconfig
+      run: |
+        echo "$KUBE_CONFIG_DATA" | base64 --decode > kubeconfig
+        chmod 600 kubeconfig
+        export KUBECONFIG=$(pwd)/kubeconfig
+      env:
+        KUBE_CONFIG_DATA: ${{ secrets.KUBE_CONFIG_DATA }}
+
+    - name: 部署到k8s
+      run: |
+        kubectl set image deployment/web-study-project web-study-project=registry.cn-hangzhou.aliyuncs.com/fage-public/web-study:${{ github.sha }} -n home-web
