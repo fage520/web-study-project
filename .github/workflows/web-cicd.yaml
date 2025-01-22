@@ -40,6 +40,10 @@ jobs:
         echo "$KUBE_CONFIG_DATA" | base64 --decode > kubeconfig
         chmod 600 kubeconfig
         export KUBECONFIG=$(pwd)/kubeconfig
+        # 调试步骤：输出kubeconfig文件内容
+        cat kubeconfig
+        # 调试步骤：验证kubectl配置
+        kubectl config view
       env:
         KUBE_CONFIG_DATA: ${{ secrets.KUBE_CONFIG_DATA }}
 
