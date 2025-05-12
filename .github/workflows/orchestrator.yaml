@@ -33,7 +33,7 @@ jobs:
   build-job:
     needs: control-center
     if: ${{ inputs.action_type == 'build' }}
-    uses: ./.github/workflows/build.yml@main
+    uses: ./.github/workflows/build.yml
     with:
       env: ${{ inputs.environment }}
       node_ver: 18
@@ -42,14 +42,14 @@ jobs:
   test-job:
     needs: control-center
     if: ${{ inputs.action_type == 'test' }}
-    uses: ./.github/workflows/test.yml@main
+    uses: ./.github/workflows/test.yml
     with:
       test_level: ${{ contains('dev staging', inputs.environment) && 'basic' || 'full' }}
 
   deploy-job:
     needs: control-center
     if: ${{ inputs.action_type == 'deploy' }}
-    uses: ./.github/workflows/deploy.yml@main
+    uses: ./.github/workflows/deploy.yml
     with:
       target_env: ${{ inputs.environment }}
       _force: ${{ inputs.safety_check && inputs.environment == 'prod' }}
