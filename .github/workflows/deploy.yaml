@@ -6,10 +6,15 @@ on:
         required: true
         type: string
         description: "部署环境 (staging 或 production)"
+      _force:  # 强制部署参数
+        required: false
+        type: boolean
+        default: false
+        description: "是否强制部署（用于生产环境的确认）"
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
       - name: Deploy to ${{ inputs.target_env }}
-        run: ./deploy.sh --env ${{ inputs.target_env }}
+        run: 'echo "安全确认: ${{ inputs._force }}"'

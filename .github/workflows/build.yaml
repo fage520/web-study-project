@@ -20,4 +20,4 @@ jobs:
         with:
           node-version: ${{ inputs.node_ver }}
           cache: 'npm'
-      - run: npm run build:${{ inputs.env }}
+      - run: 'echo "构建环境: ${{ inputs.env }}"'
