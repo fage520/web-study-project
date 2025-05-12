@@ -1,0 +1,23 @@
+name: Build Module
+on:
+  # 允许被其他工作流调用
+  workflow_call:
+    inputs:
+      env:  # 接收外部传入的环境参数
+        description: "构建环境"
+        required: true
+        type: string
+      node_ver:  # Node.js版本参数
+        required: true
+        type: string
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v3
+        with:
+          node-version: ${{ inputs.node_ver }}
+          cache: 'npm'
+      - run: npm run build:${{ inputs.env }}

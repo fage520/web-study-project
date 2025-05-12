@@ -1,0 +1,15 @@
+name: Deploy Module
+on:
+  workflow_call:
+    inputs:
+      target_env:  # 部署目标参数
+        required: true
+        type: choice
+        options: [staging, production]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Deploy to ${{ inputs.target_env }}
+        run: ./deploy.sh --env ${{ inputs.target_env }}

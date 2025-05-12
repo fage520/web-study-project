@@ -1,0 +1,57 @@
+name: Pipeline Orchestrator
+on:
+  # 手动触发配置
+  workflow_dispatch:
+    inputs:
+      action_type:  # 主操作选择器
+        description: "选择执行的操作类型"
+        required: true
+        type: choice
+        options:
+          - build
+          - test
+          - deploy
+      environment:  # 环境参数
+        description: "目标环境"
+        required: true
+        type: choice
+        options: [dev, staging, prod]
+      safety_check:  # 安全确认开关
+        description: "确认执行危险操作"
+        type: boolean
+        default: false
+
+jobs:
+  control-center:
+    runs-on: ubuntu-latest
+    steps:
+      # 参数预处理
+      - name: Validate Inputs
+        run: |
+          echo "执行操作: ${{ inputs.action_type }}"
+          echo "目标环境: ${{ inputs.environment }}"
+          echo "安全确认: ${{ inputs.safety_check }}"
+
+    # 动态调用子流水线
+    uses:
+      # 构建操作
+      if: ${{ inputs.action_type == 'build' }}
+      ./.github/workflows/build.yml@main:
+        with:
+          env: ${{ inputs.environment }}
+          node_ver: 18  # 固定版本参数示例
+        secrets: inherit
+
+      # 测试操作
+      if: ${{ inputs.action_type == 'test' }}
+      ./.github/workflows/test.yml@main:
+        with:
+          test_level: ${{ contains('dev staging', inputs.environment) && 'basic' || 'full' }}
+
+      # 部署操作
+      if: ${{ inputs.action_type == 'deploy' }}
+      ./.github/workflows/deploy.yml@main:
+        with:
+          target_env: ${{ inputs.environment }}
+          # 生产环境强制二次确认
+          _force: ${{ inputs.safety_check && inputs.environment == 'prod' }}

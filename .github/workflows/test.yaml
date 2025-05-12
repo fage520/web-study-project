@@ -1,0 +1,18 @@
+name: Test Module
+on:
+  workflow_call:
+    inputs:
+      test_level:  # 测试级别参数
+        required: true
+        type: choice
+        options: [basic, full]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Run ${{ inputs.test_level }} tests
+        run: |
+          npm install
+          npm test --coverage=${{ inputs.test_level }}
