@@ -4,8 +4,8 @@ on:
     inputs:
       target_env:  # 部署目标参数
         required: true
-        type: choice
-        options: [staging, production]
+        type: string
+        description: "部署环境 (staging 或 production)"
 
 jobs:
   deploy:

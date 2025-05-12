@@ -4,8 +4,8 @@ on:
     inputs:
       test_level:  # 测试级别参数
         required: true
-        type: choice
-        options: [basic, full]
+        type: string
+        description: "测试级别 (basic 或 full)"
 
 jobs:
   test:
