@@ -19,5 +19,4 @@ jobs:
       - uses: actions/setup-node@v3
         with:
           node-version: ${{ inputs.node_ver }}
-          cache: 'npm'
       - run: 'echo "构建环境: ${{ inputs.env }}"'
